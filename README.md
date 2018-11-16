@@ -1,20 +1,12 @@
-# Laravel File Manager
+# GameAP File Manager
 
-[![Latest Stable Version](https://poser.pugx.org/alexusmai/laravel-file-manager/v/stable)](https://packagist.org/packages/alexusmai/laravel-file-manager)
-[![Total Downloads](https://poser.pugx.org/alexusmai/laravel-file-manager/downloads)](https://packagist.org/packages/alexusmai/laravel-file-manager)
-[![Latest Unstable Version](https://poser.pugx.org/alexusmai/laravel-file-manager/v/unstable)](https://packagist.org/packages/alexusmai/laravel-file-manager)
-[![License](https://poser.pugx.org/alexusmai/laravel-file-manager/license)](https://packagist.org/packages/alexusmai/laravel-file-manager)
+![Laravel File Manager](https://raw.github.com/gameap/vue-gameap-file-manager/master/src/assets/laravel-file-manager.gif?raw=true)
 
-
-![Laravel File Manager](https://raw.github.com/alexusmai/vue-laravel-file-manager/master/src/assets/laravel-file-manager.gif?raw=true)
-
-**DEMO:** [Laravel File Manager](http://file-manager.webmai.ru/)
-
-**Vue.js Frontend:** [alexusmai/vue-laravel-file-manager](https://github.com/alexusmai/vue-laravel-file-manager)
+**Vue.js Frontend:** [gameap/vue-gameap-file-manager](https://github.com/gameap/vue-gameap-file-manager)
 
 ## Documentation
 
-[Laravel File Manager Docs](./docs/index.md)
+[GameAP File Manager Docs](./docs/index.md)
 * [Installation](./docs/installation.md)
 * [Configuration](./docs/configuration.md)
 * [Integration](./docs/integration.md)
@@ -22,7 +14,7 @@
 
 ## Features
 
-* Frontend on Vue.js - [vue-laravel-file-manager](https://github.com/alexusmai/vue-laravel-file-manager)
+* Frontend on Vue.js - [vue-gameap-file-manager](https://github.com/gameap/vue-gameap-file-manager)
 * Work with the file system is organized by the standard means Laravel Flysystem:
   * Local, FTP, S3, Dropbox ...
   * The ability to work only with the selected disks

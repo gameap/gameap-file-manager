@@ -1,8 +1,8 @@
 <?php
 
-namespace Alexusmai\LaravelFileManager\Services;
+namespace Gameap\FileManager\Services;
 
-use Alexusmai\LaravelFileManager\Traits\HelperTrait;
+use Gameap\FileManager\Traits\HelperTrait;
 use League\Flysystem\MountManager;
 use Exception;
 use Storage;

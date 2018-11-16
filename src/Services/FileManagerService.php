@@ -1,9 +1,9 @@
 <?php
 
-namespace Alexusmai\LaravelFileManager\Services;
+namespace Gameap\FileManager\Services;
 
-use Alexusmai\LaravelFileManager\Traits\ContentTrait;
-use Alexusmai\LaravelFileManager\Traits\HelperTrait;
+use Gameap\FileManager\Traits\ContentTrait;
+use Gameap\FileManager\Traits\HelperTrait;
 use Illuminate\Support\Str;
 use Storage;
 use Image;

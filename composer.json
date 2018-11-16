@@ -1,19 +1,25 @@
 {
-    "name": "alexusmai/laravel-file-manager",
-    "description": "File manager for Laravel",
+    "name": "gameap/gameap-file-manager",
+    "description": "File manager for GameAP/Laravel",
     "keywords": [
         "laravel 5",
         "file",
-        "manager"
+        "manager",
+        "gameap"
     ],
     "authors": [
         {
             "name": "Aleksandr Manekin",
             "email": "alexusmai@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Nikita Kuznetsov",
+            "email": "nikita.hldm@gmail.com",
+            "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/alexusami/laravel-file-manager",
+    "homepage": "https://github.com/gameap/gameap-file-manager",
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
@@ -25,13 +31,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Alexusmai\\LaravelFileManager\\": "src"
+            "Gameap\\FileManager\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Alexusmai\\LaravelFileManager\\FileManagerServiceProvider"
+                "Gameap\\FileManager\\FileManagerServiceProvider"
             ]
         }
     }

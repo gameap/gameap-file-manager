@@ -1,6 +1,6 @@
 <?php
 
-namespace Alexusmai\LaravelFileManager;
+namespace Gameap\FileManager;
 
 use Illuminate\Support\ServiceProvider;
 
