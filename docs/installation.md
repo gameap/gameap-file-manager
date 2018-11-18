@@ -2,13 +2,13 @@
 1. Install package - using composer
 
     ```bash
-    composer require alexusmai/laravel-file-manager
+    composer require gameap/gameap-file-manager
     ```
 
 2. If you use Laravel 5.4, then add service provider to config/app.php (for the Laravel 5.5 and higher skip this step):
 
     ```php
-    Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
+    Gameap\FileManager\FileManagerServiceProvider::class,
     ```
 3. Publish configuration file
 
@@ -17,7 +17,7 @@
     ```
 
 4. You can install npm package directly and use it in your vue application - more information about it -
-   [vue-laravel-file-manager](https://github.com/alexusmai/vue-laravel-file-manager)
+   [vue-gameap-file-manager](https://github.com/gameap/vue-gameap-file-manager)
    
    OR
    
