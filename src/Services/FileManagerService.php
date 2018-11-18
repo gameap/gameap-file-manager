@@ -56,6 +56,13 @@ class FileManagerService
             ];
         }
 
+        // Remove non existent disks
+        foreach ($config['diskList'] as $key => $diskName) {
+            if (!$this->checkDisk($diskName)) {
+                unset($config['diskList'][$key]);
+            }
+        }
+
         return [
             'result' => [
                 'status'    => 'success',
