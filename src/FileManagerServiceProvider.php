@@ -1,6 +1,6 @@
 <?php
 
-namespace Gameap\FileManager;
+namespace GameapAddons\FileManager;
 
 use Illuminate\Support\ServiceProvider;
 

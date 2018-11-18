@@ -1,9 +1,9 @@
 <?php
 
-namespace Gameap\FileManager\Services;
+namespace GameapAddons\FileManager\Services;
 
-use Gameap\FileManager\Traits\ContentTrait;
-use Gameap\FileManager\Traits\HelperTrait;
+use GameapAddons\FileManager\Traits\ContentTrait;
+use GameapAddons\FileManager\Traits\HelperTrait;
 use Gameap\Models\Server;
 use Illuminate\Support\Str;
 use League\Flysystem\Filesystem;

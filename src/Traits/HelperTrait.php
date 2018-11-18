@@ -1,6 +1,6 @@
 <?php
 
-namespace Gameap\FileManager\Traits;
+namespace GameapAddons\FileManager\Traits;
 
 use Storage;
 

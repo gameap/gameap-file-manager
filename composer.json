@@ -31,13 +31,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Gameap\\FileManager\\": "src"
+            "GameapAddons\\FileManager\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Gameap\\FileManager\\FileManagerServiceProvider"
+                "GameapAddons\\FileManager\\FileManagerServiceProvider"
             ]
         }
     }

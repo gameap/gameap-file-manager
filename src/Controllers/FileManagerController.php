@@ -1,8 +1,8 @@
 <?php
 
-namespace Gameap\FileManager\Controllers;
+namespace GameapAddons\FileManager\Controllers;
 
-use Gameap\FileManager\Services\FileManagerService;
+use GameapAddons\FileManager\Services\FileManagerService;
 use Gameap\Http\Controllers\Controller;
 use Gameap\Models\Server;
 use Illuminate\Http\Request;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Gameap\FileManager\Services;
+namespace GameapAddons\FileManager\Services;
 
-use Gameap\FileManager\Traits\HelperTrait;
+use GameapAddons\FileManager\Traits\HelperTrait;
 use Exception;
 use Storage;
 

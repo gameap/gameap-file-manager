@@ -3,7 +3,7 @@
 Route::group([
     'middleware'    => config('file-manager.middleware'),
     'prefix'        => 'file-manager',
-    'namespace'     => 'Gameap\FileManager\Controllers'
+    'namespace'     => 'GameapAddons\FileManager\Controllers'
 ], function (){
 
     Route::get('{server}/initialize', 'FileManagerController@initialize')->name('fm.initialize');
