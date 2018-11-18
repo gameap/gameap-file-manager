@@ -1,10 +1,14 @@
 <?php
 
-namespace Alexusmai\LaravelFileManager\Services;
+namespace GameapAddons\FileManager\Services;
 
-use Alexusmai\LaravelFileManager\Traits\ContentTrait;
-use Alexusmai\LaravelFileManager\Traits\HelperTrait;
+use GameapAddons\FileManager\Traits\ContentTrait;
+use GameapAddons\FileManager\Traits\HelperTrait;
+use Gameap\Models\Server;
 use Illuminate\Support\Str;
+use League\Flysystem\Filesystem;
+use Knik\Flysystem\Gameap\GameapAdapter;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Storage;
 use Image;
 use App;
@@ -12,6 +16,25 @@ use App;
 class FileManagerService
 {
     use HelperTrait, ContentTrait;
+
+    /**
+     * @var \Gameap\Models\Server
+     */
+    protected $server;
+
+    /**
+     * @param  \Gameap\Models\Server  $server
+     */
+    public function setServer(Server $server)
+    {
+        $this->server = $server;
+        $setting = $server->settings()->where('setting', 'file-manager')->first();
+        $disks = $setting->value;
+
+        foreach ($disks as $diskName => $diskConfig) {
+            config(["filesystems.disks.{$diskName}" => $diskConfig]);
+        }
+    }
 
     /**
      * Initialize App

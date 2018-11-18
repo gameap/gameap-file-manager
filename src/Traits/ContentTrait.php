@@ -1,6 +1,6 @@
 <?php
 
-namespace Alexusmai\LaravelFileManager\Traits;
+namespace GameapAddons\FileManager\Traits;
 
 use Illuminate\Support\Collection;
 use Storage;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Alexusmai\LaravelFileManager\Services;
+namespace GameapAddons\FileManager\Services;
 
-use Alexusmai\LaravelFileManager\Traits\HelperTrait;
+use GameapAddons\FileManager\Traits\HelperTrait;
 use Exception;
 use Storage;
 
