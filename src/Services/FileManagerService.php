@@ -28,8 +28,8 @@ class FileManagerService
     public function setServer(Server $server)
     {
         $this->server = $server;
-        $setting = $server->settings()->where('setting', 'file-manager')->first();
-        $disks = $setting->value;
+        $setting = $server->settings()->where('name', 'file-manager')->first();
+        $disks = json_decode($setting->value, true);
 
         foreach ($disks as $diskName => $diskConfig) {
             config(["filesystems.disks.{$diskName}" => $diskConfig]);
@@ -54,6 +54,13 @@ class FileManagerService
                     'message'   => trans('file-manager::response.noConfig')
                 ]
             ];
+        }
+
+        // Remove non existent disks
+        foreach ($config['diskList'] as $key => $diskName) {
+            if (!$this->checkDisk($diskName)) {
+                unset($config['diskList'][$key]);
+            }
         }
 
         return [
