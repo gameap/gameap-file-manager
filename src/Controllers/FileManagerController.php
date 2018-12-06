@@ -6,7 +6,6 @@ use GameapAddons\FileManager\Requests\RequestValidator;
 use GameapAddons\FileManager\FileManager;
 use GameapAddons\FileManager\Services\Zip;
 use Illuminate\Routing\Controller;
-use Gameap\Http\Controllers\Controller;
 use Gameap\Models\Server;
 use Illuminate\Http\Request;
 use Gameap\Repositories\ServerRepository;
@@ -41,10 +40,8 @@ class FileManagerController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function initialize(Server $server)
+    public function initialize()
     {
-        $this->service->setServer($server);
-
         return response()->json(
             $this->fm->initialize()
         );
@@ -59,8 +56,6 @@ class FileManagerController extends Controller
      */
     public function content(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
             $this->fm->content(
                 $request->input('disk'),
@@ -78,8 +73,6 @@ class FileManagerController extends Controller
      */
     public function tree(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
             $this->fm->tree(
                 $request->input('disk'),
@@ -97,8 +90,6 @@ class FileManagerController extends Controller
      */
     public function selectDisk(RequestValidator $request, Server $server)
     {
-    	$this->service->setServer($server);
-    	
         return response()->json([
             'result' => [
                 'status'  => 'success',
@@ -116,8 +107,6 @@ class FileManagerController extends Controller
      */
     public function upload(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
             $this->fm->upload(
                 $request->input('disk'),
@@ -137,8 +126,6 @@ class FileManagerController extends Controller
      */
     public function delete(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
             $this->fm->delete(
                 $request->input('disk'),
@@ -156,8 +143,6 @@ class FileManagerController extends Controller
      */
     public function paste(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
             $this->fm->paste(
                 $request->input('disk'),
@@ -176,8 +161,6 @@ class FileManagerController extends Controller
      */
     public function rename(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
             $this->fm->rename(
                 $request->input('disk'),
@@ -196,8 +179,6 @@ class FileManagerController extends Controller
      */
     public function download(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return $this->fm->download(
             $request->input('disk'),
             $request->input('path')
@@ -214,8 +195,6 @@ class FileManagerController extends Controller
      */
     public function thumbnails(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return $this->fm->thumbnails(
             $request->input('disk'),
             $request->input('path')
@@ -232,8 +211,6 @@ class FileManagerController extends Controller
      */
     public function preview(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return $this->fm->preview(
             $request->input('disk'),
             $request->input('path')
@@ -249,8 +226,6 @@ class FileManagerController extends Controller
      */
     public function url(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
             $this->fm->url(
                 $request->input('disk'),
@@ -268,8 +243,6 @@ class FileManagerController extends Controller
      */
     public function createDirectory(RequestValidator $request, Server $server)
     {
-    	$this->service->setServer($server);
-
         return response()->json(
             $this->fm->createDirectory(
                 $request->input('disk'),
@@ -288,8 +261,6 @@ class FileManagerController extends Controller
      */
     public function createFile(RequestValidator $request, Server $server)
     {
-    	$this->service->setServer($server);
-
         return response()->json(
             $this->fm->createFile(
                 $request->input('disk'),
@@ -308,8 +279,6 @@ class FileManagerController extends Controller
      */
     public function updateFile(RequestValidator $request, Server $server)
     {
-    	$this->service->setServer($server);
-
         return response()->json(
             $this->fm->updateFile(
                 $request->input('disk'),
@@ -328,8 +297,6 @@ class FileManagerController extends Controller
      */
     public function streamFile(RequestValidator $request, Server $server)
     {
-    	$this->service->setServer($server);
-
         return $this->fm->streamFile(
             $request->input('disk'),
             $request->input('path')
@@ -346,8 +313,6 @@ class FileManagerController extends Controller
      */
     public function zip(RequestValidator $request, Server $server, Zip $zip)
     {
-    	$this->service->setServer($server);
-
         return $zip->create();
     }
 
@@ -361,8 +326,6 @@ class FileManagerController extends Controller
      */
     public function unzip(RequestValidator $request, Server $server, Zip $zip)
     {
-    	$this->service->setServer($server);
-
         return $zip->extract();
     }
 
