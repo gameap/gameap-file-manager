@@ -2,6 +2,7 @@
 
 namespace GameapAddons\FileManager;
 
+use Alexusmai\LaravelFileManager\Requests\TempRequest;
 use Illuminate\Support\ServiceProvider;
 
 class FileManagerServiceProvider extends ServiceProvider
