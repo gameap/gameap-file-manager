@@ -28,10 +28,7 @@ class ServerDisksMiddleware
 
         $server = Server::findOrFail($serverId);
 
-        $setting = $server->settings()->where('name', 'file-manager')->first();
-        $disks = json_decode($setting->value, true);
-
-        foreach ($disks as $diskName => $diskConfig) {
+        foreach ($server->file_manager_disks as $diskName => $diskConfig) {
             config(["filesystems.disks.{$diskName}" => $diskConfig]);
         }
 
