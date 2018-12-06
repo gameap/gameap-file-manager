@@ -1,18 +1,24 @@
 <?php
 
-namespace Alexusmai\LaravelFileManager;
+namespace GameapAddons\FileManager;
 
-use Alexusmai\LaravelFileManager\Traits\CheckTrait;
-use Alexusmai\LaravelFileManager\Traits\ContentTrait;
-use Alexusmai\LaravelFileManager\Traits\PathTrait;
-use Alexusmai\LaravelFileManager\TransferService\TransferFactory;
+use GameapAddons\FileManager\Traits\CheckTrait;
+use GameapAddons\FileManager\Traits\ContentTrait;
+use GameapAddons\FileManager\Traits\PathTrait;
+use GameapAddons\FileManager\TransferService\TransferFactory;
 use Illuminate\Support\Str;
+use Gameap\Models\Server;
 use Storage;
 use Image;
 
 class FileManager
 {
     use PathTrait, ContentTrait, CheckTrait;
+
+    /**
+     * @var \Gameap\Models\Server
+     */
+    protected $server;
 
     /**
      * Initialize App
@@ -39,9 +45,11 @@ class FileManager
 
         // disk list
         foreach (config('file-manager.diskList') as $disk) {
-            $config['disks'][$disk] = array_only(
-                config('filesystems.disks')[$disk], ['driver']
-            );
+            if (array_key_exists($disk, config('filesystems.disks'))) {
+                $config['disks'][$disk] = array_only(
+                    config('filesystems.disks')[$disk], ['driver']
+                );
+            }
         }
 
         // get language

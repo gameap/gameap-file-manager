@@ -2,7 +2,7 @@
 
 namespace GameapAddons\FileManager;
 
-use Alexusmai\LaravelFileManager\Requests\TempRequest;
+use GameapAddons\FileManager\Requests\TempRequest;
 use Illuminate\Support\ServiceProvider;
 
 class FileManagerServiceProvider extends ServiceProvider
@@ -42,6 +42,8 @@ class FileManagerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/assets' => public_path('vendor/file-manager'),
         ], 'fm-assets');
+
+        $this->app['router']->aliasMiddleware('serverDisks', \GameapAddons\FileManager\Middleware\ServerDisksMiddleware::class);
     }
 
     /**

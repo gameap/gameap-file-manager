@@ -1,6 +1,6 @@
 <?php
 
-namespace Alexusmai\LaravelFileManager\TransferService;
+namespace GameapAddons\FileManager\TransferService;
 
 abstract class Transfer
 {

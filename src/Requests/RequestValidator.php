@@ -1,6 +1,6 @@
 <?php
 
-namespace Alexusmai\LaravelFileManager\Requests;
+namespace GameapAddons\FileManager\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Storage;
