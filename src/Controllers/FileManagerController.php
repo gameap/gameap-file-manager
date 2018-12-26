@@ -2,8 +2,10 @@
 
 namespace GameapAddons\FileManager\Controllers;
 
-use GameapAddons\FileManager\Services\FileManagerService;
-use Gameap\Http\Controllers\Controller;
+use GameapAddons\FileManager\Requests\RequestValidator;
+use GameapAddons\FileManager\FileManager;
+use GameapAddons\FileManager\Services\Zip;
+use Illuminate\Routing\Controller;
 use Gameap\Models\Server;
 use Illuminate\Http\Request;
 use Gameap\Repositories\ServerRepository;
@@ -11,9 +13,9 @@ use Gameap\Repositories\ServerRepository;
 class FileManagerController extends Controller
 {
     /**
-     * @var FileManagerService
+     * @var FileManager
      */
-    public $service;
+    public $fm;
 
     /**
      * The ServerRepository instance.
@@ -24,39 +26,38 @@ class FileManagerController extends Controller
 
     /**
      * FileManagerController constructor.
-     * @param FileManagerService $service
+     *
+     * @param FileManager $fm
      */
-    public function __construct(FileManagerService $service, ServerRepository $repository)
+    public function __construct(FileManager $fm, ServerRepository $repository)
     {
-        $this->service = $service;
+        $this->fm = $fm;
         $this->repository = $repository;
     }
 
     /**
-     * Initialize file manager settings
-     * @param  \Gameap\Models\Server  $server
+     * Initialize file manager
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function initialize(Server $server)
+    public function initialize()
     {
-        $this->service->setServer($server);
-
         return response()->json(
-            $this->service->initialize()
+            $this->fm->initialize()
         );
     }
 
     /**
      * Get files and directories for the selected path and disk
-     * @param Request $request
+     *
+     * @param RequestValidator $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function content(Request $request, Server $server)
+    public function content(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
-            $this->service->content(
+            $this->fm->content(
                 $request->input('disk'),
                 $request->input('path')
             )
@@ -65,15 +66,15 @@ class FileManagerController extends Controller
 
     /**
      * Directory tree
-     * @param Request $request
+     *
+     * @param RequestValidator $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function tree(Request $request, Server $server)
+    public function tree(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
-            $this->service->tree(
+            $this->fm->tree(
                 $request->input('disk'),
                 $request->input('path')
             )
@@ -82,49 +83,32 @@ class FileManagerController extends Controller
 
     /**
      * Check the selected disk
-     * @param Request $request
+     *
+     * @param RequestValidator $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function selectDisk(Request $request, Server $server)
+    public function selectDisk(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
-        return response()->json(
-            $this->service->selectDisk(
-                $request->input('disk')
-            )
-        );
-    }
-
-    /**
-     * Create new directory
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function createDirectory(Request $request, Server $server)
-    {
-        $this->service->setServer($server);
-
-        return response()->json(
-            $this->service->createDirectory(
-                $request->input('disk'),
-                $request->input('path'),
-                $request->input('name')
-            )
-        );
+        return response()->json([
+            'result' => [
+                'status'  => 'success',
+                'message' => trans('file-manager::response.diskSelected'),
+            ],
+        ]);
     }
 
     /**
      * Upload files
-     * @param Request $request
+     *
+     * @param RequestValidator $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function upload(Request $request, Server $server)
+    public function upload(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
-            $this->service->upload(
+            $this->fm->upload(
                 $request->input('disk'),
                 $request->input('path'),
                 $request->file('files'),
@@ -135,15 +119,15 @@ class FileManagerController extends Controller
 
     /**
      * Delete files and folders
-     * @param Request $request
+     *
+     * @param RequestValidator $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(Request $request, Server $server)
+    public function delete(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
-            $this->service->delete(
+            $this->fm->delete(
                 $request->input('disk'),
                 $request->input('items')
             )
@@ -152,34 +136,33 @@ class FileManagerController extends Controller
 
     /**
      * Copy / Cut files and folders
-     * @param Request $request
+     *
+     * @param RequestValidator $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function paste(Request $request, Server $server)
+    public function paste(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
-            $this->service->paste(
+            $this->fm->paste(
                 $request->input('disk'),
                 $request->input('path'),
                 $request->input('clipboard')
             )
         );
-
     }
 
     /**
-     * Rename item
-     * @param Request $request
+     * Rename
+     *
+     * @param RequestValidator $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function rename(Request $request, Server $server)
+    public function rename(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
-            $this->service->rename(
+            $this->fm->rename(
                 $request->input('disk'),
                 $request->input('newName'),
                 $request->input('oldName')
@@ -189,14 +172,14 @@ class FileManagerController extends Controller
 
     /**
      * Download file
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     *
+     * @param RequestValidator $request
+     *
+     * @return mixed
      */
-    public function download(Request $request, Server $server)
+    public function download(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
-        return $this->service->download(
+        return $this->fm->download(
             $request->input('disk'),
             $request->input('path')
         );
@@ -204,14 +187,15 @@ class FileManagerController extends Controller
 
     /**
      * Create thumbnails
-     * @param Request $request
-     * @return \Illuminate\Http\Response
+     *
+     * @param RequestValidator $request
+     *
+     * @return \Illuminate\Http\Response|mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function thumbnails(Request $request, Server $server)
+    public function thumbnails(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
-        return $this->service->thumbnails(
+        return $this->fm->thumbnails(
             $request->input('disk'),
             $request->input('path')
         );
@@ -219,14 +203,15 @@ class FileManagerController extends Controller
 
     /**
      * Image preview
-     * @param Request $request
-     * @return \Illuminate\Http\Response
+     *
+     * @param RequestValidator $request
+     *
+     * @return mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function preview(Request $request, Server $server)
+    public function preview(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
-        return $this->service->preview(
+        return $this->fm->preview(
             $request->input('disk'),
             $request->input('path')
         );
@@ -234,15 +219,15 @@ class FileManagerController extends Controller
 
     /**
      * File url
-     * @param Request $request
+     *
+     * @param RequestValidator $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function url(Request $request, Server $server)
+    public function url(RequestValidator $request, Server $server)
     {
-        $this->service->setServer($server);
-
         return response()->json(
-            $this->service->url(
+            $this->fm->url(
                 $request->input('disk'),
                 $request->input('path')
             )
@@ -250,8 +235,105 @@ class FileManagerController extends Controller
     }
 
     /**
+     * Create new directory
+     *
+     * @param RequestValidator $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createDirectory(RequestValidator $request, Server $server)
+    {
+        return response()->json(
+            $this->fm->createDirectory(
+                $request->input('disk'),
+                $request->input('path'),
+                $request->input('name')
+            )
+        );
+    }
+
+    /**
+     * Create new file
+     *
+     * @param RequestValidator $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createFile(RequestValidator $request, Server $server)
+    {
+        return response()->json(
+            $this->fm->createFile(
+                $request->input('disk'),
+                $request->input('path'),
+                $request->input('name')
+            )
+        );
+    }
+
+    /**
+     * Update file
+     *
+     * @param RequestValidator $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateFile(RequestValidator $request, Server $server)
+    {
+        return response()->json(
+            $this->fm->updateFile(
+                $request->input('disk'),
+                $request->input('path'),
+                $request->file('file')
+            )
+        );
+    }
+
+    /**
+     * Stream file
+     *
+     * @param RequestValidator $request
+     *
+     * @return mixed
+     */
+    public function streamFile(RequestValidator $request, Server $server)
+    {
+        return $this->fm->streamFile(
+            $request->input('disk'),
+            $request->input('path')
+        );
+    }
+
+    /**
+     * Create zip archive
+     *
+     * @param RequestValidator $request
+     * @param Zip              $zip
+     *
+     * @return array
+     */
+    public function zip(RequestValidator $request, Server $server, Zip $zip)
+    {
+        return $zip->create();
+    }
+
+    /**
+     * Extract zip atchive
+     *
+     * @param RequestValidator $request
+     * @param Zip              $zip
+     *
+     * @return array
+     */
+    public function unzip(RequestValidator $request, Server $server, Zip $zip)
+    {
+        return $zip->extract();
+    }
+
+    /**
      * Integration with ckeditor 4
+     *
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function ckeditor(Request $request)
