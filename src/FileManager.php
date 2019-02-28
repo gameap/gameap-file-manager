@@ -29,12 +29,14 @@ class FileManager
     {
         // if config not found
         if (!config()->has('file-manager')) {
-            return [
-                'result' => [
-                    'status'  => 'danger',
-                    'message' => trans('file-manager::response.noConfig'),
-                ],
-            ];
+            config()->set('file-manager', [
+                'diskList'  => ['server'],
+                'leftDisk'  => null,
+                'rightDisk' => null,
+                'cache' => null,
+                'windowsConfig' => 2,
+                'middleware'    => ['web', 'auth']
+            ]);
         }
 
         $config = array_only(config('file-manager'), [
