@@ -26,6 +26,18 @@ class ServerDisksMiddleware
             ], 422));
         }
 
+        // if config not found
+        if (!config()->has('file-manager')) {
+            config()->set('file-manager', [
+                'diskList'  => ['server'],
+                'leftDisk'  => null,
+                'rightDisk' => null,
+                'cache' => null,
+                'windowsConfig' => 2,
+                'middleware'    => ['web', 'auth']
+            ]);
+        }
+
         $server = Server::findOrFail($serverId);
 
         foreach ($server->file_manager_disks as $diskName => $diskConfig) {
