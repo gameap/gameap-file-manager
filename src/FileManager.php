@@ -27,6 +27,18 @@ class FileManager
      */
     public function initialize()
     {
+        // if config not found
+        if (!config()->has('file-manager')) {
+            config()->set('file-manager', [
+                'diskList'  => ['server'],
+                'leftDisk'  => null,
+                'rightDisk' => null,
+                'cache' => null,
+                'windowsConfig' => 2,
+                'middleware'    => ['web', 'auth']
+            ]);
+        }
+
         $config = array_only(config('file-manager'), [
             'leftDisk',
             'rightDisk',
