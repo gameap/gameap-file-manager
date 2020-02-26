@@ -2,7 +2,7 @@
 
 namespace GameapAddons\FileManager\TransferService;
 
-use Alexusmai\LaravelFileManager\Traits\PathTrait;
+use GameapAddons\FileManager\Traits\PathTrait;
 use Storage;
 
 class LocalTransfer extends Transfer
